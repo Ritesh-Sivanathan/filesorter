@@ -1,58 +1,78 @@
-import os, shutil
+import os, shutil, sys
 
-CWD = os.getcwd()
-FOLDERS_CREATED = {}
+try:
 
-def create():
-    
-    FOLDER_COUNT = int(input("# of Folders: "))
-    
-    for FOLDER_NUM in range(1, FOLDER_COUNT+1):
-        
-        CREATE_FOLDERS = input("Create folders: ")
-        FOLDERS_CREATED[CREATE_FOLDERS] = 0
-        print(f"{CREATE_FOLDERS} | Folder # {FOLDER_NUM}")
-    
-    exit
-    
-def values():
-        
-    for DIRECTORY in FOLDERS_CREATED:
-        FOLDERS_CREATED[DIRECTORY] = input(f"File extension {DIRECTORY}: (.png, .svg): ")
+    CWD = os.getcwd()
+    FOLDERS_CREATED = {}
 
-def folder():
-    PARENT_DIR = CWD
-    for DIRECTORY in FOLDERS_CREATED:
-        path = os.path.join(PARENT_DIR, DIRECTORY)
-        os.mkdir(path)
+    def create():
         
-def files():
-    FILES = os.listdir(CWD)
-    SPLIT_FILES = []
-    DOT_REACHED = 0
-    
-    
-    for FILE in FILES:
+        CHOICE = input("View or Create?: (v/c)")
+        
+        if CHOICE == 'v':
+            reconfigure()
+
+        FOLDER_COUNT = int(input("# of Folders: "))
+
+        for FOLDER_NUM in range(1, FOLDER_COUNT+1):
+
+            CREATE_FOLDERS = input("Create folders: ")
+            FOLDERS_CREATED[CREATE_FOLDERS] = 0
+            print(f"{CREATE_FOLDERS} | Folder # {FOLDER_NUM}")
+
+        exit
+
+    def values():
+
+        for DIRECTORY in FOLDERS_CREATED:
+            FOLDERS_CREATED[DIRECTORY] = input(f"File extension {DIRECTORY}: (.png, .svg): ")
+
+    def folder():
+        PARENT_DIR = CWD
+        for DIRECTORY in FOLDERS_CREATED:
+            path = os.path.join(PARENT_DIR, DIRECTORY)
+            os.mkdir(path)
+
+    def files():
+        FILES = os.listdir(CWD)
+        SPLIT_FILES = []
         DOT_REACHED = 0
-        for INDEX, CHAR in enumerate(FILE):
-            if CHAR == '.':
-                DOT_REACHED = 1
-                
-            if DOT_REACHED == 1:
-                SPLIT_FILES.append(FILE[INDEX:])
-                
-                for KEY, VALUE in FOLDERS_CREATED.items():
-                    if VALUE == SPLIT_FILES[-1]:
-                        shutil.move(f'{CWD}/{FILE}', f'{CWD}/{KEY}/{FILE}')
-                
-                break
-                
-    print('Files moved')        
-        
-def main():
-    create()
-    folder()
-    values()
-    files()
+
+
+        for FILE in FILES:
+            DOT_REACHED = 0
+            for INDEX, CHAR in enumerate(FILE):
+                if CHAR == '.':
+                    DOT_REACHED = 1
+
+                if DOT_REACHED == 1:
+                    SPLIT_FILES.append(FILE[INDEX:])
+
+                    for KEY, VALUE in FOLDERS_CREATED.items():
+                        if VALUE == SPLIT_FILES[-1]:
+                            shutil.move(f'{CWD}/{FILE}', f'{CWD}/{KEY}/{FILE}')
+
+                    break
+
+        print('Files moved') 
     
-main()
+    def reconfigure():
+        LIST_DIR = os.listdir()
+        for DIRECTORY in LIST_DIR:
+            FOLDERS_CREATED[DIRECTORY] = input(f"{DIRECTORY}: Enter extension: ")
+        
+        files()
+        main()       
+
+    def main():
+        create()
+        folder()
+        values()
+        files()
+
+    main()
+
+except Exception as ex:
+    template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+    message = template.format(type(ex).__name__, ex.args)
+    print (message)
