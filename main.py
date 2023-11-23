@@ -1,5 +1,4 @@
-import os
-import shutil
+import os, shutil
 
 CWD = os.getcwd()
 FOLDERS_CREATED = {}
@@ -19,7 +18,7 @@ def create():
 def values():
         
     for DIRECTORY in FOLDERS_CREATED:
-        FOLDERS_CREATED[DIRECTORY] = input("Enter the file extension to sort: (.png, .svg): ")
+        FOLDERS_CREATED[DIRECTORY] = input(f"File extension {DIRECTORY}: (.png, .svg): ")
 
 def folder():
     PARENT_DIR = CWD
