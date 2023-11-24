@@ -1,4 +1,4 @@
-import os, shutil, sys, subprocess
+import os, shutil, sys
 
 try:
 
@@ -7,8 +7,6 @@ try:
 
     def create():
         
-
-        print("Welcome. Press CTRL + C or CMD + C to exit at any time. ")
         CHOICE = input("View or Create?: (v/c): ")
         
         if CHOICE == 'v':
