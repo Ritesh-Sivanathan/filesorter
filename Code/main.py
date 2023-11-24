@@ -10,8 +10,10 @@ try:
         CWD_CHOICE = input(f"Change the directory executed?: Directory Name: {CWD} | y/n ") 
 
         if CWD_CHOICE.lower() == 'y':
-            CWD_DIRECTORY = input("Change directory name: ")
-            shutil.move(f'{CWD}/{"main.py"}', f'{CWD_DIRECTORY}/{"main.py"}')
+            CHG_DIRECTORY = input("Change directory name: ")
+            os.chdir(CHG_DIRECTORY)
+            CWD = os.getcwd()
+            print(f"Current working directory: {CWD}")
         
         CHOICE = input("View or Create?: ((v)iew / (c)reate): ")
         
@@ -25,8 +27,6 @@ try:
             CREATE_FOLDERS = input("Create folders: ")
             FOLDERS_CREATED[CREATE_FOLDERS] = 0
             print(f"{CREATE_FOLDERS} | Folder # {FOLDER_NUM}")
-
-        exit
 
     def values():
 
@@ -63,13 +63,13 @@ try:
         print('Files moved') 
     
     def reconfigure():
+
         print(f"Folders in current directory: {[name for name in os.listdir('.') if os.path.isdir(name)]}")
-        
         main()  
             
-
     def main():
 
+        
         create()
         folder()
         values()
