@@ -6,8 +6,14 @@ try:
     FOLDERS_CREATED = {}
 
     def create():
+
+        CWD_CHOICE = input(f"Change the directory executed?: Directory Name: {CWD} | y/n ") 
+
+        if CWD_CHOICE.lower() == 'y':
+            CWD_DIRECTORY = input("Change directory name: ")
+            shutil.move(f'{CWD}/{"main.py"}', f'{CWD_DIRECTORY}/{"main.py"}')
         
-        CHOICE = input("View or Create?: (v/c): ")
+        CHOICE = input("View or Create?: ((v)iew / (c)reate): ")
         
         if CHOICE == 'v':
             reconfigure()
